@@ -8,6 +8,7 @@ package telefonkonyvecske;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  *
@@ -29,16 +30,30 @@ public class Telefonkonyvecske {
         System.out.println("1. feladat: "+telefonkonyv);
         
         //2. Tudjon keresni nevet telefonszám alapján (megmondja, ha van, hogy kié, illetve visszajelzi, ha nincs).
-        System.out.println("2. feladat: "+telefonkonyv.get(202274907));
-        
-        //3. Tudjon keresni név alapján (adja vissza azoknak a számoknak a listáját, akik például Jancsi nevű emberekhez tartoznak).
-        Iterator it= telefonkonyv.entrySet().iterator();
-        Map.Entry kereses= (Map.Entry) it.next();
-        if (kereses.getValue().equals("Vajda János")) {
-            System.out.println("3. feladat: "+kereses.getKey());
+        Scanner sc= new Scanner(System.in, "windows-1252");
+        System.out.println("2. feladat: Kérem adja meg a keresendő telefonszámot (pl. 204587596)!");
+        Integer telkeres=sc.nextInt();
+        if (telefonkonyv.get(telkeres)==null) {
+            System.out.println("Nem található ilyen telefonszám a névjegyzékben.");
+        }else{
+        System.out.println("A keresett telefonszámhoz tartozó személy: "+telefonkonyv.get(telkeres));
         }
-        
+        //3. Tudjon keresni név alapján (adja vissza azoknak a számoknak a listáját, akik például Jancsi nevű emberekhez tartoznak).
+        System.out.println("3. feladat: Kérem adja meg a keresett személy nevét!");
+        String nevkeres=sc.next();
+        System.out.println(nevkeres);
+        Iterator it= telefonkonyv.entrySet().iterator();
+        while(it.hasNext()){
+        Map.Entry kereses= (Map.Entry) it.next();
+            if (kereses.getValue().equals(nevkeres)) {
+            System.out.println(kereses.getKey());
+            }else{
+                System.out.println("Nem található ilyen név a névjegyzékben.");
+            }
+
+        }
         //4. Kérdezzük le az összes számot.
+        System.out.println("4. feladat: ");
         
         //5. Kérdezzük le az összes ember nevét. 
         
