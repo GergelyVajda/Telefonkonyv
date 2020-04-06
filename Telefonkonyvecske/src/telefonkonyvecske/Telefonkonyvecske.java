@@ -23,14 +23,20 @@ public class Telefonkonyvecske {
 
         //1. Legyen képes belerakni a telefonkönyvbe egy telszám-név párt.
         Map<Integer, String> telefonkonyv = new HashMap<>();
+        Scanner sc1 = new Scanner(System.in);
+        Scanner sc2 = new Scanner(System.in, "windows-1252");
         telefonkonyv.put(202274907, "Vajda Gergely");
         telefonkonyv.put(209706789, "Vajda Tamás");
         telefonkonyv.put(203944931, "Vajda János");
         telefonkonyv.put(205876954, "Böröcz Gergely");
-        System.out.println("1. feladat: " + telefonkonyv);
+        System.out.println("1. feladat: Kérem adja meg a névjegyzékbe felvenni kívánt telefonszámot (pl. 204587596)!");
+        Integer szamBele=sc1.nextInt();
+        System.out.println("Kérem adja meg az előbbi telfonszámhoz tartozó személy nevét!");
+        String nevBele=sc2.nextLine();
+        telefonkonyv.put(szamBele,nevBele);
+        System.out.println(telefonkonyv);
 
         //2. Tudjon keresni nevet telefonszám alapján (megmondja, ha van, hogy kié, illetve visszajelzi, ha nincs).
-        Scanner sc1 = new Scanner(System.in);
         System.out.println("2. feladat: Kérem adja meg a keresendő telefonszámot (pl. 204587596)!");
         Integer telkeres = sc1.nextInt();
         if (telefonkonyv.get(telkeres) == null) {
@@ -40,7 +46,6 @@ public class Telefonkonyvecske {
         }
         //3. Tudjon keresni név alapján (adja vissza azoknak a számoknak a listáját, akik például Jancsi nevű emberekhez tartoznak).
         System.out.println("3. feladat: Kérem adja meg a keresett személy nevét!");
-        Scanner sc2 = new Scanner(System.in, "windows-1252");
         String nevkeres = sc2.nextLine();
         Iterator it1 = telefonkonyv.entrySet().iterator();
         Integer jartItt=0;
