@@ -12,10 +12,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 /**
  *
@@ -140,7 +144,7 @@ public class Telefonkonyvecske {
 
         Map<Integer, String> telefonkonyv = new HashMap<>();
         
-        beolvasas(telefonkonyv); 
+        /*beolvasas(telefonkonyv); 
         
         //1. Legyen képes belerakni a telefonkönyvbe egy telszám-név párt.
         hozzaadas(telefonkonyv);
@@ -161,6 +165,28 @@ public class Telefonkonyvecske {
         torolTelbol(telefonkonyv);
         
         mentes(telefonkonyv);
+        
+        */
+        try {
+            SAXBuilder jdomBuilder = new SAXBuilder();
+            org.jdom2.Document jdomDocument = jdomBuilder.build("probaXML.xml");
+            Element jdomRoot = jdomDocument.getRootElement();
+            List<Element>children = jdomRoot.getChildren();
+            Element child;
+            String telefonszam;
+            String nev;
+            for (int i = 0; i < children.size(); i++) {
+                child = children.get(i);
+                telefonszam = child.getChild("telefonszam").getText();
+                nev = child.getChild("nev").getText();
+                System.out.println(nev+" "+telefonszam);
+            }
+            
+        } catch (JDOMException ex) {
+            System.out.println("SAXBuilder hiba!");
+        } catch (IOException ex) {
+            System.out.println("File hiba!");
+        }
     }
 
 }
