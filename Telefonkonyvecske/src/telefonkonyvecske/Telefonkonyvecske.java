@@ -20,6 +20,8 @@ import java.util.logging.Logger;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 /**
  *
@@ -144,11 +146,13 @@ public class Telefonkonyvecske {
 
         Map<Integer, String> telefonkonyv = new HashMap<>();
         
-        /*beolvasas(telefonkonyv); 
+        /*
+        beolvasas(telefonkonyv); 
+        
         
         //1. Legyen képes belerakni a telefonkönyvbe egy telszám-név párt.
         hozzaadas(telefonkonyv);
-
+/*
         //2. Tudjon keresni nevet telefonszám alapján (megmondja, ha van, hogy kié, illetve visszajelzi, ha nincs).
         telkeres(telefonkonyv);
         
@@ -168,6 +172,7 @@ public class Telefonkonyvecske {
         
         */
         try {
+            //xml olvasó
             SAXBuilder jdomBuilder = new SAXBuilder();
             org.jdom2.Document jdomDocument = jdomBuilder.build("probaXML");
             Element jdomRoot = jdomDocument.getRootElement();
@@ -181,6 +186,27 @@ public class Telefonkonyvecske {
                 nev = child.getChild("nev").getText();
                 System.out.println(nev+" "+telefonszam);
             }
+            
+            //xml író
+            org.jdom2.Document jdomDoc = new org.jdom2.Document();
+            Element rootElement = new Element("telefonkonyv");
+            jdomDoc.setRootElement(rootElement);
+            for (int i = 0; i < telefonkonyv.size(); i++) {
+                Element child2 = new Element("telefonszam");
+                Element idElement = new Element("id");
+                idElement.addContent("204589671");
+                Element nevElement = new Element("nev");
+                nevElement.addContent("Kosztyó Károly");
+                child2.addContent(idElement);
+                child2.addContent(nevElement);
+            }
+            
+            XMLOutputter xml = new XMLOutputter();
+            xml.setFormat(Format.getPrettyFormat());
+            PrintWriter okos= new PrintWriter("megirtXML.xml");
+            okos.println(xml.outputString(jdomDoc));
+            okos.flush();
+            okos.close();
             
         } catch (JDOMException ex) {
             System.out.println("SAXBuilder hiba!");
