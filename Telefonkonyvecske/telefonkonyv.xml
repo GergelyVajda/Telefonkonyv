@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<telefonkonyv>
+  <szemely>
+    <telefonszam>201234567</telefonszam>
+    <nev>Illés Zoltán</nev>
+  </szemely>
+  <szemely>
+    <telefonszam>704567892</telefonszam>
+    <nev>Kosztyó Károly</nev>
+  </szemely>
+  <szemely>
+    <telefonszam>304567182</telefonszam>
+    <nev>Németh Nikolett</nev>
+  </szemely>
+</telefonkonyv>
+

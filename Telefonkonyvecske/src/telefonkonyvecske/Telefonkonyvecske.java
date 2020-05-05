@@ -108,13 +108,32 @@ public class Telefonkonyvecske {
 
     public static void mentes(Map telefonkonyv) {
         try {
-            FileWriter buta = new FileWriter("telkonyv.csv");
-            PrintWriter okos = new PrintWriter(buta);
+            org.jdom2.Document jdomDoc = new org.jdom2.Document();
+            Element rootElement = new Element("telefonkonyv");
+            jdomDoc.setRootElement(rootElement);
             Iterator it = telefonkonyv.entrySet().iterator();
+            String value;
+            String key;
             while (it.hasNext()) {
                 Map.Entry kereses = (Map.Entry) it.next();
-                okos.println(kereses.getKey() + ";" + kereses.getValue());
+                key = kereses.getKey().toString();
+                value = kereses.getValue().toString();
+
+                Element child = new Element("szemely");
+                Element idElement = new Element("telefonszam");
+                idElement.addContent(key);
+                Element nevElement = new Element("nev");
+                nevElement.addContent(value);
+                child.addContent(idElement);
+                child.addContent(nevElement);
+                rootElement.addContent(child);
+
             }
+            XMLOutputter xml = new XMLOutputter();
+            xml.setFormat(Format.getPrettyFormat());
+            PrintWriter okos = new PrintWriter("telefonkonyv.xml");
+            okos.println(xml.outputString(jdomDoc));
+            okos.flush();
             okos.close();
         } catch (IOException ex) {
             System.out.println("Hiba a file írásakor!");
@@ -123,97 +142,53 @@ public class Telefonkonyvecske {
 
     public static void beolvasas(Map telefonkonyv) {
         try {
-            FileReader buta = new FileReader("telkonyv.csv");
-            BufferedReader okos = new BufferedReader(buta);
-            String egyben;
-            String[] ketteszedo= new String[2];
-            
-            for (int i = 0; i < 1000; i++) {
-                egyben=okos.readLine();
-                if (egyben==null) {
-                    break;
-                }
-                ketteszedo=egyben.split(";");
-                telefonkonyv.put(Integer.parseInt(ketteszedo[0]), ketteszedo[1]);
+            SAXBuilder jdomBuilder = new SAXBuilder();
+            org.jdom2.Document jdomDocument = jdomBuilder.build("telefonkonyv.xml");
+            Element jdomRoot = jdomDocument.getRootElement();
+            List<Element> children = jdomRoot.getChildren();
+            Element child;
+            String telefonszam;
+            String nev;
+            for (int i = 0; i < children.size(); i++) {
+                child = children.get(i);
+                telefonszam = child.getChild("telefonszam").getText();
+                nev = child.getChild("nev").getText();
+                telefonkonyv.put(telefonszam, nev);
             }
 
         } catch (IOException ex) {
             System.out.println("Hiba a file beolvasásánál!");
+        } catch (JDOMException ex) {
+            System.out.println("SAXbuilder hiba!");
         }
     }
 
     public static void main(String[] args) {
 
         Map<Integer, String> telefonkonyv = new HashMap<>();
-        
-        
-        beolvasas(telefonkonyv); 
-        
-        /*
+
+        beolvasas(telefonkonyv);
+
         //1. Legyen képes belerakni a telefonkönyvbe egy telszám-név párt.
         hozzaadas(telefonkonyv);
-/*
+
         //2. Tudjon keresni nevet telefonszám alapján (megmondja, ha van, hogy kié, illetve visszajelzi, ha nincs).
         telkeres(telefonkonyv);
-        
+
         //3. Tudjon keresni név alapján (adja vissza azoknak a számoknak a listáját, akik például Jancsi nevű emberekhez tartoznak).
         nevkeres(telefonkonyv);
-        
+
         //4. Kérdezzük le az összes számot.
         osszSzamLekeres(telefonkonyv);
 
         //5. Kérdezzük le az összes ember nevét. 
         osszNevLekeres(telefonkonyv);
-        
+
         //6. Tudjon törölni telefonszám alapján.
         torolTelbol(telefonkonyv);
-        
+
         mentes(telefonkonyv);
-        
-        */
-        try {
-            //xml olvasó
-            SAXBuilder jdomBuilder = new SAXBuilder();
-            org.jdom2.Document jdomDocument = jdomBuilder.build("probaXML");
-            Element jdomRoot = jdomDocument.getRootElement();
-            List<Element>children = jdomRoot.getChildren();
-            Element child;
-            String telefonszam;
-            String nev;
-            for (int i = 0; i < children.size(); i++) {
-                child = children.get(i);
-                telefonszam = child.getChild("id").getText();
-                nev = child.getChild("nev").getText();
-                System.out.println(nev+" "+telefonszam);
-            }
-            
-            //xml író
-            org.jdom2.Document jdomDoc = new org.jdom2.Document();
-            Element rootElement = new Element("telefonkonyv");
-            jdomDoc.setRootElement(rootElement);
-            for (int i = 0; i < telefonkonyv.size(); i++) {
-                Element child2 = new Element("telefonszam");
-                Element idElement = new Element("id");
-                idElement.addContent("204589671");
-                Element nevElement = new Element("nev");
-                nevElement.addContent("Kosztyó Károly");
-                child2.addContent(idElement);
-                child2.addContent(nevElement);
-                rootElement.addContent(child2);
-            }
-            
-            XMLOutputter xml = new XMLOutputter();
-            xml.setFormat(Format.getPrettyFormat());
-            PrintWriter okos= new PrintWriter("megirtXML.xml");
-            okos.println(xml.outputString(jdomDoc));
-            okos.flush();
-            okos.close();
-            
-        } catch (JDOMException ex) {
-            System.out.println("SAXBuilder hiba!");
-        } catch (IOException ex) {
-            System.out.println("File hiba!");
-        }
+
     }
 
 }
