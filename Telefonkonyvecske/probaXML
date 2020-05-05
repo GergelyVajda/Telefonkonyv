@@ -1,14 +1,17 @@
 <?xml version = "1.0"?>
 <telefonkonyv>
-   <telefonszam id = "202274907">
-      <nev>Vajda Gergely</nev>
+   <telefonszam>
+   <id>202274907</id>
+   <nev>Vajda Gergely</nev>
    </telefonszam>
    
-   <telefonszam id = "20976789">
-      <nev>Vajda Tamás</nev>
+     <telefonszam>
+   <id>209706789</id>
+   <nev>Vajda Tamás</nev>
    </telefonszam>
    
-   <telefonszam id = "203944931">
-      <nev>Vajda János</nev>
+     <telefonszam>
+   <id>203944931</id>
+   <nev>Vajda János</nev>
    </telefonszam>
 </telefonkonyv>

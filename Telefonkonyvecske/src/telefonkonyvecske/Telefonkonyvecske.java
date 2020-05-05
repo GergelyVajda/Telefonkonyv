@@ -169,7 +169,7 @@ public class Telefonkonyvecske {
         */
         try {
             SAXBuilder jdomBuilder = new SAXBuilder();
-            org.jdom2.Document jdomDocument = jdomBuilder.build("probaXML.xml");
+            org.jdom2.Document jdomDocument = jdomBuilder.build("probaXML");
             Element jdomRoot = jdomDocument.getRootElement();
             List<Element>children = jdomRoot.getChildren();
             Element child;
@@ -177,7 +177,7 @@ public class Telefonkonyvecske {
             String nev;
             for (int i = 0; i < children.size(); i++) {
                 child = children.get(i);
-                telefonszam = child.getChild("telefonszam").getText();
+                telefonszam = child.getChild("id").getText();
                 nev = child.getChild("nev").getText();
                 System.out.println(nev+" "+telefonszam);
             }
