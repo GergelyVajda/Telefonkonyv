@@ -146,10 +146,10 @@ public class Telefonkonyvecske {
 
         Map<Integer, String> telefonkonyv = new HashMap<>();
         
-        /*
+        
         beolvasas(telefonkonyv); 
         
-        
+        /*
         //1. Legyen képes belerakni a telefonkönyvbe egy telszám-név párt.
         hozzaadas(telefonkonyv);
 /*
@@ -199,6 +199,7 @@ public class Telefonkonyvecske {
                 nevElement.addContent("Kosztyó Károly");
                 child2.addContent(idElement);
                 child2.addContent(nevElement);
+                rootElement.addContent(child2);
             }
             
             XMLOutputter xml = new XMLOutputter();
