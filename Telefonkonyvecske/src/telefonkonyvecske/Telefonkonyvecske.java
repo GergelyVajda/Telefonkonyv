@@ -90,7 +90,7 @@ public class Telefonkonyvecske {
     public static void torolTelbol(Map telefonkonyv) {
         Scanner sc1 = new Scanner(System.in);
         System.out.println("Kérem adja meg a törölni kívánt telefonszámot!");
-        Integer telkeres = sc1.nextInt();
+        String telkeres = sc1.nextLine();
         Iterator it = telefonkonyv.entrySet().iterator();
         Integer jartItt = 0;
         while (it.hasNext()) {
