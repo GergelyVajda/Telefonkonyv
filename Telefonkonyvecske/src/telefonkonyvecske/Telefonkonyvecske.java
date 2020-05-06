@@ -163,31 +163,53 @@ public class Telefonkonyvecske {
         }
     }
 
+    public static void menu(Map telefonkonyv) {
+        beolvasas(telefonkonyv);
+        System.out.println("Válasszon menüpontot!");
+        System.out.println("1-es gomb: névjegy hozzáadása");
+        System.out.println("2-es gomb: telefonszám keresése");
+        System.out.println("3-as gomb: név keresése");
+        System.out.println("4-es gomb: az összes tárolt telefonszám lekérése");
+        System.out.println("5-ös gomb: az összes tárolt név lekérése ");
+        System.out.println("6-os gomb: névjegy törlése telefonszám alapján");
+        System.out.println("7-es gomb: kilépés");
+        System.out.println("Nyomja le a választott menüpont gombját, majd az enter billentyűt!");
+        Scanner sc = new Scanner(System.in);
+        Integer utasitas = sc.nextInt();
+        if (utasitas == 1) {
+            hozzaadas(telefonkonyv);
+            menu(telefonkonyv);
+        }
+        if (utasitas == 2) {
+            telkeres(telefonkonyv);
+            menu(telefonkonyv);
+        }
+        if (utasitas == 3) {
+            nevkeres(telefonkonyv);
+            menu(telefonkonyv);
+        }
+        if (utasitas == 4) {
+            osszSzamLekeres(telefonkonyv);
+            menu(telefonkonyv);
+        }
+        if (utasitas == 5) {
+            osszNevLekeres(telefonkonyv);
+            menu(telefonkonyv);
+        }
+        if (utasitas == 6) {
+            torolTelbol(telefonkonyv);
+            menu(telefonkonyv);
+        }
+        if (utasitas == 7) {
+            mentes(telefonkonyv);
+        }
+    }
+
     public static void main(String[] args) {
 
         Map<Integer, String> telefonkonyv = new HashMap<>();
+        menu(telefonkonyv);
 
-        beolvasas(telefonkonyv);
-
-        //1. Legyen képes belerakni a telefonkönyvbe egy telszám-név párt.
-        hozzaadas(telefonkonyv);
-
-        //2. Tudjon keresni nevet telefonszám alapján (megmondja, ha van, hogy kié, illetve visszajelzi, ha nincs).
-        telkeres(telefonkonyv);
-
-        //3. Tudjon keresni név alapján (adja vissza azoknak a számoknak a listáját, akik például Jancsi nevű emberekhez tartoznak).
-        nevkeres(telefonkonyv);
-
-        //4. Kérdezzük le az összes számot.
-        osszSzamLekeres(telefonkonyv);
-
-        //5. Kérdezzük le az összes ember nevét. 
-        osszNevLekeres(telefonkonyv);
-
-        //6. Tudjon törölni telefonszám alapján.
-        torolTelbol(telefonkonyv);
-
-        mentes(telefonkonyv);
 
     }
 
