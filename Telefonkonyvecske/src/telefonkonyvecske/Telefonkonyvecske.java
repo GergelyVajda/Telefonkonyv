@@ -10,6 +10,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -107,7 +112,7 @@ public class Telefonkonyvecske {
     }
 
     public static void mentes(Map telefonkonyv) {
-        try {
+        /*try {
             org.jdom2.Document jdomDoc = new org.jdom2.Document();
             Element rootElement = new Element("telefonkonyv");
             jdomDoc.setRootElement(rootElement);
@@ -137,6 +142,19 @@ public class Telefonkonyvecske {
             okos.close();
         } catch (IOException ex) {
             System.out.println("Hiba a file írásakor!");
+        }*/
+        try {
+            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/telefon","root","Alma1023");
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("INSERT INTO `telefon`.`nevjegyzek` VALUES ('202274907', 'Vajda', 'Gergely', '18')");
+            while (rs.next()) {
+                System.out.println(rs.getString(""));
+            }
+            rs.close();
+            stat.close();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
         }
     }
 
@@ -160,6 +178,22 @@ public class Telefonkonyvecske {
             System.out.println("Hiba a file beolvasásánál!");
         } catch (JDOMException ex) {
             System.out.println("SAXbuilder hiba!");
+        }
+    }
+    public static void tablakeszites(){
+    try {
+        Connection con= DriverManager.getConnection("jdbc:mysql://","root","Alma1023");
+            Statement stat = con.createStatement();
+            stat.executeUpdate("Create database valaki");
+                String Sql = "CREATE TABLE telefon.nevjegyzek"
+                        + "(id INTEGER not NULL,"
+                        + "first VARCHAR(25),"
+                        + "last VARCHAR(25),"
+                        + "age INTEGER,"
+                        + "PRIMARY KEY ( id ))";
+                stat.executeUpdate(Sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
         }
     }
 
