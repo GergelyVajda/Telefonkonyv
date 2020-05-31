@@ -184,7 +184,7 @@ public class Telefonkonyvecske {
     try {
         Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306","root","Alma1023");
             Statement stat = con.createStatement();
-            stat.executeUpdate("Create database valaki");
+            stat.executeUpdate("Create database telefon");
                 String Sql = "CREATE TABLE telefon.nevjegyzek"
                         + "(id INTEGER not NULL,"
                         + "first VARCHAR(25),"
@@ -198,7 +198,6 @@ public class Telefonkonyvecske {
     }
 
     public static void menu(Map telefonkonyv) {
-        tablakeszites();
         beolvasas(telefonkonyv);
         System.out.println("Válasszon menüpontot!");
         System.out.println("1-es gomb: névjegy hozzáadása");
