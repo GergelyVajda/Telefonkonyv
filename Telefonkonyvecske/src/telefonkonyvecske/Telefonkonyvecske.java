@@ -146,11 +146,21 @@ public class Telefonkonyvecske {
         try {
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/telefon","root","Alma1023");
             Statement stat = con.createStatement();
-            ResultSet rs = stat.executeQuery("INSERT INTO `telefon`.`nevjegyzek` VALUES ('202274907', 'Vajda', 'Gergely', '18')");
+            Element rootElement = new Element("telefonkonyv");
+            Iterator it = telefonkonyv.entrySet().iterator();
+            String name;
+            String id;
+            while (it.hasNext()) {
+                Map.Entry kereses = (Map.Entry) it.next();
+                id = kereses.getKey().toString();
+                name = kereses.getValue().toString();
+                stat.executeUpdate("INSERT INTO 'telefon'.'nevjegyzek' VALUES ('+36"+id+"', '"+name+"')");
+            }
+            /*ResultSet rs = stat.executeQuery("INSERT INTO `telefon`.`nevjegyzek` VALUES ('202274907', 'Vajda', 'Gergely', '18')");
             while (rs.next()) {
                 System.out.println(rs.getString(""));
             }
-            rs.close();
+            rs.close();*/
             stat.close();
             con.close();
         } catch (SQLException ex) {
@@ -187,9 +197,7 @@ public class Telefonkonyvecske {
             stat.executeUpdate("Create database telefon");
                 String Sql = "CREATE TABLE telefon.nevjegyzek"
                         + "(id INTEGER not NULL,"
-                        + "first VARCHAR(25),"
-                        + "last VARCHAR(25),"
-                        + "age INTEGER,"
+                        + "name VARCHAR(25),"
                         + "PRIMARY KEY ( id ))";
                 stat.executeUpdate(Sql);
         } catch (SQLException ex) {
@@ -243,6 +251,7 @@ public class Telefonkonyvecske {
 
         Map<Integer, String> telefonkonyv = new HashMap<>();
         menu(telefonkonyv);
+        
 
 
     }
