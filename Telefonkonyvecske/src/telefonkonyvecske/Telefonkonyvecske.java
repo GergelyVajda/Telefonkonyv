@@ -146,7 +146,6 @@ public class Telefonkonyvecske {
         try {
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/telefon","root","Alma1023");
             Statement stat = con.createStatement();
-            Element rootElement = new Element("telefonkonyv");
             Iterator it = telefonkonyv.entrySet().iterator();
             String name;
             String id;
@@ -154,7 +153,7 @@ public class Telefonkonyvecske {
                 Map.Entry kereses = (Map.Entry) it.next();
                 id = kereses.getKey().toString();
                 name = kereses.getValue().toString();
-                stat.executeUpdate("INSERT INTO 'telefon'.'nevjegyzek' VALUES ('+36"+id+"', '"+name+"')");
+                stat.executeUpdate("INSERT INTO 'nevjegyzek' VALUES (+36"+id+", "+name+")");
             }
             /*ResultSet rs = stat.executeQuery("INSERT INTO `telefon`.`nevjegyzek` VALUES ('202274907', 'Vajda', 'Gergely', '18')");
             while (rs.next()) {
