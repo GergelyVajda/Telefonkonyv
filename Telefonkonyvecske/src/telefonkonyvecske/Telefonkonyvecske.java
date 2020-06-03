@@ -148,14 +148,17 @@ public class Telefonkonyvecske {
             Statement stat = con.createStatement();
             Iterator it = telefonkonyv.entrySet().iterator();
             String name;
-            String id;
+            Integer id;
+            String ideiglenes;
             while (it.hasNext()) {
                 Map.Entry kereses = (Map.Entry) it.next();
-                id = kereses.getKey().toString();
+                ideiglenes = (String) kereses.getKey();
+                id = Integer.parseInt(ideiglenes)+1;
                 name = kereses.getValue().toString();
-                stat.executeUpdate("INSERT INTO 'nevjegyzek' VALUES (+36"+id+", "+name+")");
+                System.out.println(id+" "+name);
+                stat.executeUpdate("INSERT INTO nevjegyzek VALUES (id, name)");
             }
-            /*ResultSet rs = stat.executeQuery("INSERT INTO `telefon`.`nevjegyzek` VALUES ('202274907', 'Vajda', 'Gergely', '18')");
+            /*ResultSet rs = stat.executeQuery("");
             while (rs.next()) {
                 System.out.println(rs.getString(""));
             }
